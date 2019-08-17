@@ -3,17 +3,17 @@
 * Página do repositório do trabalho ([link GitHub](TODO)) 
 
 * Discente 1
-	* Nome: TODO
-	* Matrícula: TODO 
-	* Distribuição da nota (%): TODO
+	* Nome: Bruna Leal Torres Silva
+	* Matrícula: 19111149
+	* Distribuição da nota (%): 33,33%
 * Discente 2
-	* Nome: TODO
-	* Matrícula: TODO
-	* Distribuição da nota (%): TODO
+	* Nome: Eirene de Oliveira Fireman
+	* Matrícula: 19110980
+	* Distribuição da nota (%): 33,33%
 * Discente 3
-	* Nome: TODO
-	* Matrícula: TODO
-	* Distribuição da nota (%): TODO		
+	* Nome: Samuel Lucas Vieira Lins Barbosa
+	* Matrícula: 19111333
+	* Distribuição da nota (%): 33,33%		
 	
 # Resultados
 
