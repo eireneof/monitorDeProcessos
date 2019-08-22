@@ -16,26 +16,94 @@
 	* Distribuição da nota (%): 33,33%		
 	
 # Resultados
+*  **UCP**: consumo da UCP em porcentagem.
 
-* TODO: Plotar um gráfico com os resultados das medições das seguintes métricas utilizadas para avaliar o comportamento do **processo filho**:
-	*  **UCP**: consumo da UCP em porcentagem.
-	![CPU TEST](https://i.imgur.com/yZhBThq.png) // COMO O GRAFICO É
-	![CPU TEST](https://i.imgur.com/OSzMHIc.png) // COMO achamos que seria
-	*  **UCP-MEM**: consumo da memória principal em Kilobytes.
-	![CPU - MEM TEST](https://i.imgur.com/qJQaw4M.png)// COMO O GRAFICO É
-	![CPU TEST](https://i.imgur.com/cbZ93ga.png) // COMO achamos que seria
-* TODO: Cada métrica deve ser plotada em duas curvas separadas.
-* TODO: o eixo das abscissas deve representar o tempo medido a cada segundo e o eixo das coordenadas deve representar a métrica medida.
+![CPU TEST](https://i.imgur.com/yZhBThq.png)
 
+*  **UCP-MEM**: consumo da memória principal em Kilobytes.
+
+![CPU - MEM TEST](https://i.imgur.com/qJQaw4M.png)
 
 # Discussão
 
+Ao se deparar com as especificações do projeto, nossa primeira dificuldade foi utilizar os parâmetros da função main. Ao pesquisar, entendemos que a sigla ```argv``` nos permite passar argumentos do tipo char através do terminal.
 
+Com isso, o nosso programa pôde reconhecer se era pra executar só a cpu (./main cpu) ou a cpu em conjunto com a memória(./main cpu_mem) através da função ```string_compare()```.
+
+```c
+string_compare(0, argv[1], "ucp") == 0;
+string_compare(0, argv[1], "ucp_mem") == 0;
+```
 
 ## Utilização intensa da UCP
 
-TODO: explicar se o comportamento da curva **UCP** foi o esperado, sempre justificando sua resposta, referenciando o código fonte do programa e o gráfico do experimento realizado.
+A fim de utilizar intensamente a CPU, nossa equipe utilizou o seguinte comando:
+
+```c
+for(;;) {}
+```
+
+Caracterizado por permitir um loop infinito que só pode ser quebrado ao final do processo, quando o processo pai mata o filho.
+
+```c
+strcpy(cmd, "kill ");
+strcat(cmd, id);
+system(cmd);
+```
+Para o controle de tempo utilizamos outro ```for``` aliado a uma função:
+
+```c
+for(i = 0; i < 10; i++)
+{
+	system(cmd);
+	sleep(1);
+}
+```
+
+A função ```sleep()``` permite que nosso programa espere 1 segundo sem executar nada. A estruturação desse for permitiu que nós pudéssemos analisar o programa em tempos menores, como por exemplo, 1 segundo ou 2. Isto fez-se necessário, pois dificilmente os computadores usados rodavam o programa em 10 segundos completos sem travar.
+
+Dessa forma, o que foi relatado até agora mostra o modo escolhido pelo nosso grupo para a execução desse projeto. 
+
+Nós não esperávamos que o rendimento da CPU ultrapassasse 100%, mas obtivemos resultados que provaram o contrário, pois tiveram momentos em que a cpu chegou a até 103% e isso acontece porque o processador pode ter mais de um núcleo.
+
+O gráfico dos resultados esperados:
+
+![CPU TEST](https://i.imgur.com/OSzMHIc.png)
+
+O gráfico dos resultados reais:
+
+![CPU TEST](https://i.imgur.com/yZhBThq.png)
+
 
 ## Utilização intensa da UCP e memória
 
-TODO: explicar se o comportamento da curva **UCP-MEM** foi o esperado, sempre justificando sua resposta, referenciando o código fonte do programa e o gráfico do experimento realizado.
+Da mesma forma que geramos um loop infinito no caso supracitado, foi preciso gerar outro para gerenciar o uso da memória.
+
+Tanto no uso exclusivo da cpu, quanto no uso conjunto dela com a memória nosso objetivo era executar os comandos através da função system(). Foi um desafio no começo, mas após pesquisas concluímos que incluindo a biblioteca stdlib.h, essa função realizaria chamadas de funções do sistema. Os comandos utilizados foram:
+
+```c
+strcpy(cmd, "ps -e -o pid,pcpu | grep ");
+strcat(cmd, id);
+strcat(cmd, ";pmap ");
+strcat(cmd, id); 
+strcat(cmd, " | grep -i Total");
+```
+
+1.	```ps```: reporta o estado do processo atual.
+2.	```-e -o``` : parâmetros do ps.
+3.	```grep```: procurar strings de texto e expressões regulares linha a linha.
+4.	```pmap```: serve para realizar o mapeamento completo da memória em um processo.
+
+Além desses comandos, tivemos que fazer a alocação dinâmica da memória, com o limite de 4 bytes, para isso utilizamos a função:
+
+```c
+malloc(sizeof(int));
+```
+
+Os resultados esperados eram: 
+
+![CPU TEST](https://i.imgur.com/LVXexrK.png)
+
+Porém, com esses procedimentos, os resultados obtidos foram:
+
+![CPU - MEM TEST](https://i.imgur.com/qJQaw4M.png)
