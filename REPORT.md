@@ -18,9 +18,9 @@
 
 # Discussão
 
-Ao se deparar com as especificações do projeto, nossa primeira dificuldade foi utilizar os parâmetros da função main. Ao pesquisar, entendemos que a sigla ```argv``` nos permite passar argumentos do tipo char através do terminal.
+Ao se deparar com as especificações do projeto, nossa primeira dificuldade foi utilizar os parâmetros da função ```main```. Ao pesquisar, entendemos que a sigla ```argv``` nos permite passar argumentos do tipo char através do terminal.
 
-Com isso, o nosso programa pôde reconhecer se era pra executar só a cpu (./main cpu) ou a cpu em conjunto com a memória(./main cpu_mem) através da função ```string_compare()```.
+Com isso, o nosso programa pôde reconhecer se era pra executar só a cpu ou a cpu em conjunto com a memória através da função ```string_compare()```.
 
 ```c
 string_compare(0, argv[1], "ucp") == 0;
