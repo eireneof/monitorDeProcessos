@@ -60,11 +60,11 @@ for(i = 0; i < 10; i++)
 }
 ```
 
-A função ```sleep()``` permite que nosso programa espere 1 segundo sem executar nada. A estruturação desse for permitiu que nós pudéssemos analisar o programa em tempos menores, como por exemplo, 1 segundo ou 2. Isto fez-se necessário, pois dificilmente os computadores usados rodavam o programa em 10 segundos completos sem travar.
+A função ```sleep()``` permite que nosso programa espere 1 segundo sem executar nada. A estruturação desse ```for``` permitiu que nós pudéssemos analisar o programa em tempos menores, como por exemplo, 1 segundo ou 2. Isto fez-se necessário, pois dificilmente os computadores usados rodavam o programa em 10 segundos completos sem travar.
 
 Dessa forma, o que foi relatado até agora mostra o modo escolhido pelo nosso grupo para a execução desse projeto. 
 
-Nós não esperávamos que o rendimento da CPU ultrapassasse 100%, mas obtivemos resultados que provaram o contrário, pois tiveram momentos em que a cpu chegou a até 103% e isso acontece porque o processador pode ter mais de um núcleo.
+Nós não esperávamos que o rendimento da CPU ultrapassasse 100%, mas obtivemos resultados que provaram o contrário, pois tiveram momentos em que a cpu chegou a até 103% e descobrimos que isso acontece porque o processador pode ter mais de um núcleo, e cada um deles representa 100%.
 
 O gráfico dos resultados esperados:
 
@@ -78,6 +78,13 @@ O gráfico dos resultados reais:
 ## Utilização intensa da UCP e memória
 
 Da mesma forma que geramos um loop infinito no caso supracitado, foi preciso gerar outro para gerenciar o uso da memória.
+
+```c
+for(;;)
+{ 
+	malloc(sizeof(int));
+}
+```
 
 Tanto no uso exclusivo da cpu, quanto no uso conjunto dela com a memória nosso objetivo era executar os comandos através da função system(). Foi um desafio no começo, mas após pesquisas concluímos que incluindo a biblioteca stdlib.h, essa função realizaria chamadas de funções do sistema. Os comandos utilizados foram:
 
@@ -94,13 +101,7 @@ strcat(cmd, " | grep -i Total");
 3.	```grep```: procurar strings de texto e expressões regulares linha a linha.
 4.	```pmap```: serve para realizar o mapeamento completo da memória em um processo.
 
-Além desses comandos, tivemos que fazer a alocação dinâmica da memória, com o limite de 4 bytes, para isso utilizamos a função:
-
-```c
-malloc(sizeof(int));
-```
-
-Os resultados esperados eram: 
+Os resultados esperados eram que : 
 
 ![CPU TEST](https://i.imgur.com/LVXexrK.png)
 
