@@ -15,14 +15,6 @@
 	* Matrícula: 19111333
 	* Distribuição da nota (%): 33,33%		
 	
-# Resultados
-*  **UCP**: consumo da UCP em porcentagem.
-
-![CPU TEST](https://i.imgur.com/yZhBThq.png)
-
-*  **UCP-MEM**: consumo da memória principal em Kilobytes.
-
-![CPU - MEM TEST](https://i.imgur.com/qJQaw4M.png)
 
 # Discussão
 
@@ -50,6 +42,7 @@ strcpy(cmd, "kill ");
 strcat(cmd, id);
 system(cmd);
 ```
+
 Para o controle de tempo utilizamos outro ```for``` aliado a uma função:
 
 ```c
@@ -77,7 +70,7 @@ O gráfico dos resultados reais:
 
 ## Utilização intensa da UCP e memória
 
-Da mesma forma que geramos um loop infinito no caso supracitado, foi preciso gerar outro para gerenciar o uso da memória.
+Da mesma forma que geramos um loop infinito no caso supracitado, foi preciso gerar outro para gerenciar o uso da memória, mas com alterações, afinal, agora iria ser gerenciado além da cpu, também a memoria. Dessa forma, tivemos que fazer uma alocação dinâmica da memória, com o limite de um inteiro, ou seja, 4 bytes.
 
 ```c
 for(;;)
@@ -86,7 +79,7 @@ for(;;)
 }
 ```
 
-Tanto no uso exclusivo da cpu, quanto no uso conjunto dela com a memória nosso objetivo era executar os comandos através da função system(). Foi um desafio no começo, mas após pesquisas concluímos que incluindo a biblioteca stdlib.h, essa função realizaria chamadas de funções do sistema. Os comandos utilizados foram:
+Tanto no uso exclusivo da cpu, quanto no uso conjunto dela com a memória nosso objetivo era executar os comandos através da função ```system()```. Foi um desafio no começo, mas após pesquisas concluímos que incluindo a biblioteca ```stdlib.h```, essa função realizaria chamadas de funções do sistema. Os comandos utilizados foram:
 
 ```c
 strcpy(cmd, "ps -e -o pid,pcpu | grep ");
@@ -101,10 +94,10 @@ strcat(cmd, " | grep -i Total");
 3.	```grep```: procurar strings de texto e expressões regulares linha a linha.
 4.	```pmap```: serve para realizar o mapeamento completo da memória em um processo.
 
-Os resultados esperados eram que : 
-
-![CPU TEST](https://i.imgur.com/LVXexrK.png)
-
-Porém, com esses procedimentos, os resultados obtidos foram:
+Por fim, com esses procedimentos, os resultados obtidos foram:
 
 ![CPU - MEM TEST](https://i.imgur.com/qJQaw4M.png)
+
+# Conclusão
+
+Neste trabalho, foi mostrado que é possível monitorar o consumo da CPU e da memória através da criação de processos filhos idênticos aos processos pais, alterando apenas o “PID” (Process Identifier) e a posição na memória, com a chamada de sistema ```fork ()```.
